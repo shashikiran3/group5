@@ -9,7 +9,7 @@ pip install sklearn
 pip install pandas
 Pip install matplotlib
 
-3. Source codes: Run all codes in 'src' directory following manner in command window
+3. Source codes: Run all codes in 'src' directory in following manner in command window
 check.py:
 		 This is to check the integrity for the downloaded miRNA files
 		 python check.py.  
