@@ -70,19 +70,19 @@ def model_fit_predict(X_train,X_test,y_train,y_test):
 		'LogisticRegression': LogisticRegression(),
 		'ExtraTreesClassifier': ExtraTreesClassifier(),
 		'RandomForestClassifier': RandomForestClassifier(),
-    	#'AdaBoostClassifier': AdaBoostClassifier(),
-    	'GradientBoostingClassifier': GradientBoostingClassifier(),
-    	'SVC': SVC(),
-		#'MLPClassifier':MLPClassifier()
+    		#'AdaBoostClassifier': AdaBoostClassifier(),
+    		'GradientBoostingClassifier': GradientBoostingClassifier(),
+    		'SVC': SVC(),
+		'MLPClassifier':MLPClassifier()
 	}
 	tuned_parameters = {
 		'LogisticRegression':{'C': [1, 10]},
 		'ExtraTreesClassifier': { 'n_estimators': [16, 32] },
 		'RandomForestClassifier': { 'n_estimators': [16, 32] },
-    	#'AdaBoostClassifier': { 'n_estimators': [16, 32], 'learning_rate': [0.0001, 0.005] },
-    	'GradientBoostingClassifier': { 'n_estimators': [16, 32], 'learning_rate': [0.1, 0.8] },
-    	'SVC': {'kernel': ['rbf'], 'C': [1, 10], 'gamma': [0.001, 0.0001]},
-		#'MLPClassifier':{'activation':['relu'],'alpha':[1e-5],'hidden_layer_sizes':[(20,10)],'solver':['lbfgs']},
+    		#'AdaBoostClassifier': { 'n_estimators': [16, 32], 'learning_rate': [0.0001, 0.005] },
+    		'GradientBoostingClassifier': { 'n_estimators': [16, 32], 'learning_rate': [0.1, 0.8] },
+    		'SVC': {'kernel': ['rbf'], 'C': [1, 10], 'gamma': [0.001, 0.0001]},
+		'MLPClassifier':{'activation':['relu'],'alpha':[1e-5],'hidden_layer_sizes':[(20,10)],'solver':['lbfgs']},
 	}
 	
 	# tuned_parameters = {
@@ -109,35 +109,35 @@ def model_fit_predict(X_train,X_test,y_train,y_test):
 	#print(scores)
 	return scores
 
-# def plotROC(X_train,y_train,X_test,y_test):
-	# y = label_binarize(y_test, classes=range(28))
-	# classifier = OneVsRestClassifier(AdaBoostClassifier())
-	# y_score = classifier.fit(X_train, y_train).decision_function(X_test)
+ def plotROC(X_train,y_train,X_test,y_test):
+	y = label_binarize(y_test, classes=range(28))
+	classifier = OneVsRestClassifier(AdaBoostClassifier())
+	y_score = classifier.fit(X_train, y_train).decision_function(X_test)
 
-	# fpr = dict()
-	# tpr = dict()
-	# roc_auc = dict()
-	# for i in range(28):
-		# fpr[i], tpr[i], _ = roc_curve(y[:, i], y_score[:, i])
-		# roc_auc[i] = auc(fpr[i], tpr[i])
+	fpr = dict()
+	tpr = dict()
+	roc_auc = dict()
+	for i in range(28):
+		fpr[i], tpr[i], _ = roc_curve(y[:, i], y_score[:, i])
+		roc_auc[i] = auc(fpr[i], tpr[i])
 
-	# fpr["micro"], tpr["micro"], _ = roc_curve(y.ravel(), y_score.ravel())
-	# roc_auc["micro"] = auc(fpr["micro"], tpr["micro"])
+	fpr["micro"], tpr["micro"], _ = roc_curve(y.ravel(), y_score.ravel())
+	roc_auc["micro"] = auc(fpr["micro"], tpr["micro"])
 
-	# plt.figure()
-	# plt.plot(fpr["micro"], tpr["micro"],
+	plt.figure()
+	plt.plot(fpr["micro"], tpr["micro"],
 			 # label='micro-average ROC curve (area = {0:0.2f})'''.format(roc_auc["micro"]))
-	# for i in range(28):
+	for i in range(28):
 		# plt.plot(fpr[i], tpr[i], label='ROC curve of class {0} (area = {1:0.2f})'''.format(i, roc_auc[i]))
 
-	# plt.plot([0, 1], [0, 1], 'k--')
-	# plt.xlim([0.0, 1.0])
-	# plt.ylim([0.0, 1.05])
-	# plt.xlabel('False Positive Rate')
-	# plt.ylabel('True Positive Rate')
-	# plt.title('Receiver operating characteristic of multi-class')
-	# plt.legend(loc="lower right")
-	# plt.show()
+	plt.plot([0, 1], [0, 1], 'k--')
+	plt.xlim([0.0, 1.0])
+	plt.ylim([0.0, 1.05])
+	plt.xlabel('False Positive Rate')
+	plt.ylabel('True Positive Rate')
+	plt.title('Receiver operating characteristic of multi-class')
+	plt.legend(loc="lower right")
+	plt.show()
 
 def draw(scores):
 	'''
@@ -215,7 +215,7 @@ if __name__ == '__main__':
 
 
 	scores = model_fit_predict(X_train[:,feaures_columns],X_test[:,feaures_columns],y_train,y_test)
-	#plotROC(X_train,y_train,X_test,y_test)
+	plotROC(X_train,y_train,X_test,y_test)
 	
 	
 	
